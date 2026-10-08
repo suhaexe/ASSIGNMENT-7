@@ -1,13 +1,18 @@
 import Navbar from "@/components/Navbar";
+import Ticker from "@/components/Ticker";
+import Hero from "@/components/Hero";
+import Footer from "@/components/Footer";
+import { getProducts } from "@/lib/api";
 
-export default function Home() {
+export default async function Home() {
+  const products = await getProducts();
+
   return (
     <>
       <Navbar />
-      <main className="max-w-6xl mx-auto px-4 py-20">
-        <h1 className="text-3xl font-bold">homepage</h1>
-        <p className="text-slate-600 mt-2">welcome</p>
-      </main>
+      <Ticker products={products} />
+      <Hero />
+      <Footer />
     </>
   );
 }

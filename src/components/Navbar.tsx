@@ -19,7 +19,7 @@ const categories = [
   { name: "মসলা", slug: "mosla", icon: "🌶️" },
 ];
 
-export default function Navbar() {
+const Navbar = () => {
   const pathname = usePathname();
   const { data: session, isPending } = useSession();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -44,14 +44,13 @@ export default function Navbar() {
         },
         onError: () => {
           toast.error("সাইন আউট করতে সমস্যা হয়েছে");
-        }
+        },
       },
     });
   };
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200">
-      {/* Row 1: Logo + Auth */}
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
@@ -66,7 +65,6 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Auth — right side */}
         <div className="flex items-center gap-2">
           {isPending ? (
             <div className="h-9 w-20 rounded-lg bg-slate-100 animate-pulse" />
@@ -140,7 +138,6 @@ export default function Navbar() {
         </div>
       </div>
 
-   
       <nav className="border-t border-slate-100">
         <div className="max-w-6xl mx-auto px-4 py-2 flex items-center gap-1.5 overflow-x-auto scrollbar-hide">
           {categories.map((cat) => {
@@ -153,7 +150,7 @@ export default function Navbar() {
                   "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm whitespace-nowrap transition",
                   active
                     ? "bg-green-600 text-white font-medium shadow-sm"
-                    : "text-slate-600 hover:bg-slate-100"
+                    : "text-slate-600 hover:bg-slate-100",
                 )}
               >
                 <span className="text-xs">{cat.icon}</span>
@@ -166,3 +163,5 @@ export default function Navbar() {
     </header>
   );
 }
+
+export default Navbar;

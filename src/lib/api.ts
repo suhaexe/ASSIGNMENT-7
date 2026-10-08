@@ -2,37 +2,38 @@ import type { Product, Category } from "@/types/api";
 
 const BASE = process.env.NEXT_PUBLIC_API_URL;
 
-export async function getProducts(): Promise<Product[]> {
-  const res = await fetch(`${BASE}/products`, { cache: "no-store" });
-  if (!res.ok) throw new Error("Failed to load products");
-  return res.json();
+async function safeFetch<T>(path: string, fallback: T): Promise<T> {
+  const url = `${BASE}${path}`;
+  console.log("[api]", url);
+
+  try {
+    const res = await fetch(url, { next: { revalidate: 60 } });
+    console.log("[api]", res.status, res.statusText);
+
+    if (!res.ok) {
+      const body = await res.text();
+      console.log("[api] body:", body.slice(0, 300));
+      return fallback;
+    }
+    return res.json();
+  } catch (err) {
+    console.log("[api] error:", err);
+    return fallback;
+  }
 }
 
-export async function getProduct(slug: string): Promise<Product | null> {
-  const res = await fetch(`${BASE}/products/${slug}`, { cache: "no-store" });
-  if (!res.ok) return null;
-  return res.json();
-}
+export const getProducts = () => safeFetch<Product[]>("/products", []);
 
-export async function getCategories(): Promise<Category[]> {
-  const res = await fetch(`${BASE}/categories`, { cache: "no-store" });
-  if (!res.ok) throw new Error("Failed to load categories");
-  return res.json();
-}
+export const getProduct = (slug: string) =>
+  safeFetch<Product | null>(`/products/${slug}`, null);
 
-export async function getProductsByCategory(slug: string): Promise<Product[]> {
-  const res = await fetch(`${BASE}/products?category=${slug}`, {
-    cache: "no-store",
-  });
-  if (!res.ok) return [];
-  return res.json();
-}
+export const getCategories = () => safeFetch<Category[]>("/categories", []);
 
-export async function getCategory(slug: string): Promise<Category | null> {
-  const res = await fetch(`${BASE}/categories/${slug}`, { cache: "no-store" });
-  if (!res.ok) return null;
-  return res.json();
-}
+export const getProductsByCategory = (slug: string) =>
+  safeFetch<Product[]>(`/products?category=${slug}`, []);
+
+export const getCategory = (slug: string) =>
+  safeFetch<Category | null>(`/categories/${slug}`, null);
 
 export function unitBn(unit: string): string {
   const map: Record<string, string> = {
@@ -52,10 +53,9 @@ export function marketStats(product: Product) {
   const maxs = product.markets.map((m) => m.max);
   const min = Math.min(...mins);
   const max = Math.max(...maxs);
-
   const avg = Math.round(
     product.markets.reduce((sum, m) => sum + (m.min + m.max) / 2, 0) /
-      product.markets.length,
+      product.markets.length
   );
   return { min, max, avg };
 }
