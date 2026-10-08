@@ -1,8 +1,7 @@
-"use client";
+// "use client";
 
 import type { Product } from "@/types/api";
-import { toBn } from "@/lib/bn";
-import { unitBn } from "@/lib/api";
+import { toBn, unitBn } from "@/lib/bn";
 
 type Props = { products: Product[] };
 

@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="bn">
-      <body className="font-[Hind_Siliguri] bg-[#F0F5F0] text-slate-900 antialiased">
+      <body className="font-[Hind_Siliguri] bg-red-500 text-slate-900 antialiased">
         {children}
         <Toaster
           position="top-center"
