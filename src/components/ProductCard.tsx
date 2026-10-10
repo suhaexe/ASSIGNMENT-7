@@ -16,7 +16,7 @@ const ProductCard = ({ product }: Props) => {
 
   return (
     <Link
-      href={`/product/${product.slug}`}
+      href={`/product/${product.id}`}
       className="block bg-white border border-slate-200 rounded-xl p-4 hover:border-green-300 hover:shadow-sm transition"
     >
       <div className="flex items-center gap-3">

@@ -28,9 +28,9 @@ export default async function Home() {
       <main className="max-w-6xl mx-auto px-4 pb-12">
         <section className="mt-10">
           <SectionHeading
-            title="আজ দাম বেড়েছে ▲"
+            title="আজ দাম বেড়েছে"
+            arrow="up"
             subtitle="যেসব পণ্যের দাম সবচেয়ে বেশি বেড়েছে"
-            accent="red"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {risers.map((p) => (
@@ -41,9 +41,9 @@ export default async function Home() {
 
         <section className="mt-12">
           <SectionHeading
-            title="আজ দাম কমেছে ▼"
+            title="আজ দাম কমেছে"
+            arrow="down"
             subtitle="যেসব পণ্যের দাম সবচেয়ে বেশি কমেছে"
-            accent="green"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {fallers.map((p) => (

@@ -13,11 +13,11 @@ export const metadata: Metadata = {
     "চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও নিত্যপ্রয়োজনীয় পণ্যের আজকের বাজার দর।",
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <html lang="bn">
       <body className="font-[Hind_Siliguri] bg-[#f9fffb] text-slate-900 antialiased">
@@ -37,4 +37,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

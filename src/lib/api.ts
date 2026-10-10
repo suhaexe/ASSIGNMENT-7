@@ -13,10 +13,14 @@ async function safeFetch<T>(path: string, fallback: T): Promise<T> {
 }
 
 export const getProducts = () => safeFetch<Product[]>("/products", []);
-export const getProduct = (slug: string) =>
-  safeFetch<Product | null>(`/products/${slug}`, null);
+
+export const getProduct = (id: string) =>
+  safeFetch<Product | null>(`/products/${id}`, null);
+
 export const getCategories = () => safeFetch<Category[]>("/categories", []);
+
 export const getProductsByCategory = (slug: string) =>
   safeFetch<Product[]>(`/products?category=${slug}`, []);
+
 export const getCategory = (slug: string) =>
   safeFetch<Category | null>(`/categories/${slug}`, null);
