@@ -1,3 +1,5 @@
+"'use client";
+
 import type { Product } from "@/types/api";
 import { toBn, unitBn } from "@/lib/bn";
 

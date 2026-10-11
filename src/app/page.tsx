@@ -1,14 +1,27 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Ticker from "@/components/Ticker";
 import Hero from "@/components/Hero";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import SectionHeading from "@/components/SectionHeading";
+import CardSkeleton from "@/components/CardSkeleton";
 import { getProducts } from "@/lib/api";
 import { toBn } from "@/lib/bn";
+import type { Product } from "@/types/api";
 
-export default async function Home() {
-  const products = await getProducts();
+const Home = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getProducts().then((data) => {
+      setProducts(data);
+      setLoading(false);
+    });
+  }, []);
 
   const risers = products
     .filter((p) => p.change.dir === "up")
@@ -19,6 +32,22 @@ export default async function Home() {
     .filter((p) => p.change.dir === "down")
     .sort((a, b) => a.change.pct - b.change.pct)
     .slice(0, 6);
+
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <main className="max-w-6xl mx-auto px-4 pb-12 pt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <CardSkeleton key={i} />
+            ))}
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
@@ -69,4 +98,6 @@ export default async function Home() {
       <Footer />
     </>
   );
-}
+};
+
+export default Home;
