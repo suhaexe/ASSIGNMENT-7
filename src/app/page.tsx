@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import SectionHeading from "@/components/SectionHeading";
 import { getProducts } from "@/lib/api";
+import { toBn } from "@/lib/bn";
 
 export default async function Home() {
   const products = await getProducts();
@@ -30,7 +31,7 @@ export default async function Home() {
           <SectionHeading
             title="আজ দাম বেড়েছে"
             arrow="up"
-            subtitle="যেসব পণ্যের দাম সবচেয়ে বেশি বেড়েছে"
+            subtitle="যেসব পণ্যের দাম আজ বেড়েছে"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {risers.map((p) => (
@@ -43,7 +44,7 @@ export default async function Home() {
           <SectionHeading
             title="আজ দাম কমেছে"
             arrow="down"
-            subtitle="যেসব পণ্যের দাম সবচেয়ে বেশি কমেছে"
+            subtitle="যেসব পণ্যের দাম আজ কমেছে"
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {fallers.map((p) => (
@@ -55,7 +56,7 @@ export default async function Home() {
         <section id="সব-পণ্য" className="mt-12 scroll-mt-28">
           <SectionHeading
             title="সব পণ্য"
-            subtitle="সব ক্যাটাগরির আজকের বাজার দর"
+            subtitle={`মোট ${toBn(products.length)}টি পণ্য দেখানো হচ্ছে`}
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {products.map((p) => (
